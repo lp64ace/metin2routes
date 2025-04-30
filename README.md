@@ -1,4 +1,4 @@
-# hook
+# Hook
 Sample function hooking for windows
 
 ## Target program
