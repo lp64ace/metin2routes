@@ -1,5 +1,5 @@
 # Hook
-Sample function hooking for windows
+Demonstration of basic function hooking on Windows using techniques such as Detours or manual patching.
 
 ## Target program
 
