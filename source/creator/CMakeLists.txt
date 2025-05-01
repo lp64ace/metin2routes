@@ -6,15 +6,6 @@ set(INC
 	PUBLIC .
 	
 	# External Include Directories
-	${DETOURS_INCLUDE_DIRS}
-	
-)
-
-# -----------------------------------------------------------------------------
-# Define System Include Directories
-
-set(INC_SYS
-	# External System Include Directories
 	
 )
 
@@ -30,15 +21,20 @@ set(SRC
 
 set(LIB
 	# Internal Library Dependencies
+	hook::extern::cjson
 	hook::intern::guardedalloc
 	hook::source::hooklib
+	hook::source::kernel
+	hook::source::launch
 	
 	# External Library Dependencies
-	${DETOURS_LIBRARIES}
 	
 )
 
 # -----------------------------------------------------------------------------
 # Declare Library
 
-hook_add_dll(predator "${SRC}" "${INC}" "${INC_SYS}" "${LIB}")
+add_executable(creator "${SRC}")
+
+hook_target_link_libraries(creator "${LIB}")
+hook_target_include_dirs(creator "${INC}")

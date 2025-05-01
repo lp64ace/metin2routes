@@ -1,4 +1,4 @@
-﻿# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # Define Include Directories
 
 set(INC
@@ -15,6 +15,7 @@ set(INC
 set(INC_SYS
 	# External System Include Directories
 	${PTHREADS_INCLUDE_DIRS}
+	${DETOURS_INCLUDE_DIRS}
 	
 )
 
@@ -22,28 +23,12 @@ set(INC_SYS
 # Define Source Files
 
 set(SRC
-	LIB_assert.h
-	LIB_fileops.h
-	LIB_listbase.h
-	LIB_memory.h
-	LIB_path_utils.h
-	LIB_string.h
-	LIB_string_utf.h
-	LIB_sys_types.h
-	LIB_utildefines.h
-	LIB_utildefines_variadic.h
+	KER_global.h
+	KER_main.h
 	
-	algorithm/rabin_karp.c
-	algorithm/rabin_karp.h
-	
-	intern/assert.c
-	intern/fileops.c
-	intern/listbase.c
-	intern/memory.c
-	intern/path_utils.c
-	intern/string.c
-	intern/string_utf.c
-	intern/utildefines.c
+	intern/global.c
+	intern/global_launch_json.c
+	intern/main.c
 )
 
 # -----------------------------------------------------------------------------
@@ -51,18 +36,22 @@ set(SRC
 
 set(LIB
 	# Internal Library Dependencies
+	hook::extern::cjson
 	hook::intern::guardedalloc
+	hook::source::hooklib
+	hook::source::launch
 	
 	# External Library Dependencies
 	PUBLIC ${PTHREADS_LIBRARIES}
+	PUBLIC ${DETOURS_LIBRARIES}
 	
 )
 
 # -----------------------------------------------------------------------------
 # Declare Library
 
-hook_add_lib(hooklib "${SRC}" "${INC}" "${INC_SYS}" "${LIB}")
-add_library(hook::source::hooklib ALIAS hooklib)
+hook_add_lib(kernel "${SRC}" "${INC}" "${INC_SYS}" "${LIB}")
+add_library(hook::source::kernel ALIAS kernel)
 
 # -----------------------------------------------------------------------------
 # Define Include Directories (Test)
@@ -80,7 +69,6 @@ set(INC
 
 set(INC_SYS
 	# External System Include Directories
-	${PTHREADS_INCLUDE_DIRS}
 	
 )
 
@@ -88,8 +76,6 @@ set(INC_SYS
 # Define Source Files (Test)
 
 set(TEST
-	test/listbase.cc
-	test/string.cc
 )
 
 # -----------------------------------------------------------------------------
@@ -98,14 +84,13 @@ set(TEST
 set(LIB
 	# Internal Library Dependencies
 	hook::intern::guardedalloc
-	hook::source::hooklib
+	hook::source::kernel
 	
 	# External Library Dependencies
-	${PTHREADS_LIBRARIES}
 	
 )
 
 # -----------------------------------------------------------------------------
 # Declare Test
 
-hook_add_test_executable(hooklib "${TEST}" "${INC}" "${INC_SYS}" "${LIB}")
+# hook_add_test_executable(kernel "${TEST}" "${INC}" "${INC_SYS}" "${LIB}")

@@ -15,8 +15,8 @@ uintptr_t LIB_pattern_offset(const void *base, size_t size, const unsigned char 
 	for (const void *itr = base; itr != POINTER_OFFSET(base, size - (length + pre)); itr = POINTER_OFFSET(itr, 1)) {
 		size_t index = 0;
 		while (index < length) {
-			unsigned char m = (mask) ? mask[index] : 0xff;
-			if (((*(const unsigned char *)POINTER_OFFSET(itr, index + pre)) & m) != (bytes[index] & m)) {
+			unsigned char byte = (mask) ? mask[index] : 0xff;
+			if (((*(const unsigned char *)POINTER_OFFSET(itr, index + pre)) & byte) != (bytes[index] & byte)) {
 				break;
 			}
 			if (++index == length) {

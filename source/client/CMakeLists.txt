@@ -14,6 +14,7 @@ set(INC
 
 set(INC_SYS
 	# External System Include Directories
+	${DETOURS_INCLUDE_DIRS}
 	
 )
 
@@ -33,13 +34,11 @@ set(LIB
 	hook::source::hooklib
 	
 	# External Library Dependencies
+	${DETOURS_LIBRARIES}
 	
 )
 
 # -----------------------------------------------------------------------------
 # Declare Library
 
-add_executable(target "${SRC}")
-
-hook_target_link_libraries(target "${LIB}")
-hook_target_include_dirs(target "${INC}")
+hook_add_dll(client "${SRC}" "${INC}" "${INC_SYS}" "${LIB}")
