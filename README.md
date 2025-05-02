@@ -9,7 +9,7 @@ Here are some instructions for building the cheat, the project uses CMake for bu
 cmake -G "Visual Studio 17 2022" -A Win32 /path/to/source
 ```
 
-Building the project is also straight forward.
+Compiling the project is also straight forward.
 
 ```sh
 cmake --build . --config Release
