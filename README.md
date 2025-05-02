@@ -17,7 +17,7 @@ cmake --build . --config Release
 
 ## Launch
 
-Here are some example launch options in order to run the cheat
+Here are some example launch options in order to run the cheat, the launcher needs to have elevated permissions.
 
 !launch.json
 ```json
