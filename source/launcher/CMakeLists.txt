@@ -26,7 +26,7 @@ set(LIB
 	hook::source::hooklib
 	hook::source::kernel
 	hook::source::launch
-	
+
 	# External Library Dependencies
 	
 )
@@ -34,7 +34,7 @@ set(LIB
 # -----------------------------------------------------------------------------
 # Declare Library
 
-add_executable(creator "${SRC}")
+add_executable(launcher "${SRC}")
 
-hook_target_link_libraries(creator "${LIB}")
-hook_target_include_dirs(creator "${INC}")
+hook_target_link_libraries(launcher "${LIB}")
+hook_target_include_dirs(launcher "${INC}")

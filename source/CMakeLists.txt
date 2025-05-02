@@ -3,4 +3,4 @@
 
 add_subdirectory(hook)
 add_subdirectory(client)
-add_subdirectory(creator)
+add_subdirectory(launcher)

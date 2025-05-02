@@ -22,6 +22,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+add_compile_definitions(OUTPUT_ARCHIVE_PATH="${CMAKE_BINARY_DIR}/lib")
+add_compile_definitions(OUTPUT_LIBRARY_PATH="${CMAKE_BINARY_DIR}/lib")
+add_compile_definitions(OUTPUT_RUNTIME_PATH="${CMAKE_BINARY_DIR}/bin")
+
 # ----------------------------------------------------------------------------
 # Main Platform Checks
 

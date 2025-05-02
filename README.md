@@ -1,6 +1,20 @@
 # Hook
 Metin2 internal cheat for Raventor V2
 
+## Build
+
+Here are some instructions for building the cheat, the project uses CMake for build configuration.
+
+```sh
+cmake -G "Visual Studio 17 2022" -A Win32 /path/to/source
+```
+
+Building the project is also straight forward.
+
+```sh
+cmake --build . --config Release
+```
+
 ## Launch
 
 Here are some example launch options in order to run the cheat
