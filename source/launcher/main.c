@@ -25,9 +25,11 @@ void launch(const char *dll) {
 	LIB_path_join(client, ARRAY_SIZE(client), G.m2_folder, G.m2_client);
 
 	if (CreateProcess(client, NULL, NULL, NULL, FALSE, CREATE_SUSPENDED, NULL, G.m2_folder, &startup, &process)) {
+#ifndef NDEBUG
 		fprintf(stdout, "Process '%s' has been launched in suspended mode, pid %d!\n", G.m2_client, process.dwProcessId);
 		fprintf(stdout, "Press any key to resume the application...\n");
-		(void)getchar();
+		// (void)getchar();
+#endif
 
 		LPVOID alloc = VirtualAllocEx(process.hProcess, NULL, LIB_strlen(dll) + 1, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
 		if (alloc) {
@@ -61,7 +63,11 @@ int main(void) {
 
 	KER_globals_init();
 	do {
+#ifndef NDEBUG
 		launch(OUTPUT_RUNTIME_PATH "/Debug/client.dll");
+#else
+		launch(OUTPUT_RUNTIME_PATH "/Release/client.dll");
+#endif
 	} while (false);
 	KER_globals_exit();
 

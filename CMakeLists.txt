@@ -50,21 +50,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # -----------------------------------------------------------------------------
-# Architecture
-
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|AMD64")
-    add_definitions(-D_AMD64_)
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "x86|i386")
-    add_definitions(-D_X86_)
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm64")
-    add_definitions(-D_ARM64_)
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "arm")
-    add_definitions(-D_ARM_)
-elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "ia64")
-    add_definitions(-D_IA64_)
-endif()
-
-# -----------------------------------------------------------------------------
 # Organization
 
 if(WIN32 OR XCODE)

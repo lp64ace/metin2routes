@@ -1,12 +1,13 @@
 #include "LIB_memory.h"
 #include "LIB_utildefines.h"
 
+#include "intern/CPythonApplication.h"
+#include "intern/CPythonNetworkStream.h"
+
 #include <stdio.h>
 #include <windows.h>
-#include <psapi.h>
-#include <detours.h>
 
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID unused) {
+HOOK_EXPORT BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID unused) {
 	switch (reason) {
 		case DLL_PROCESS_ATTACH: {
 			DisableThreadLibraryCalls(hModule);
@@ -16,10 +17,12 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID unused) {
 				(void)freopen("CONOUT$", "w", stderr);
 			}
 
-			fprintf(stdout, "Hello from client.dll\n");
-			fflush(stdout);
+			CPythonApplication_Hook();
+			CPythonNetworkStream_Hook();
 		} break;
 		case DLL_PROCESS_DETACH: {
+			CPythonApplication_Restore();
+			CPythonNetworkStream_Restore();
 		} break;
 	}
 	return TRUE;

@@ -7,7 +7,24 @@
 #include "LIB_utildefines_variadic.h"
 
 #include <math.h>
+#include <stdio.h>
 #include <string.h>
+
+/* -------------------------------------------------------------------- */
+/** \name Log Macros
+ * \{ */
+
+#define LOG(fmt, ...) fprintf(stdout, "[%s:%d] " fmt "\n", __FUNCTION__, __LINE__, __VA_ARGS__);
+
+/** \} */
+
+/* -------------------------------------------------------------------- */
+/** \name Memory Macros
+ * \{ */
+
+#define MEM_PAD(size) unsigned char pad ## __COUNTER__[size]
+
+/** \} */
 
 /* -------------------------------------------------------------------- */
 /** \name Simple Math Macros
@@ -204,6 +221,18 @@ void memswap(void *m1, void *m2, size_t n);
 #endif
 
 #define HOOK_MATH_DO_INLINE 1
+
+/** /} */
+
+/* -------------------------------------------------------------------- */
+/** \name Export Attributes
+ * \{ */
+
+#ifdef _WIN32
+#	define HOOK_EXPORT __declspec(dllexport)
+#else
+#	define HOOK_EXPORT
+#endif
 
 /** /} */
 

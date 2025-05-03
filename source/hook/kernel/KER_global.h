@@ -8,6 +8,10 @@ extern "C" {
 typedef struct Global {
 	char m2_folder[1024];
 	char m2_client[1024];
+
+	char auth_channel[1024];
+	char auth_username[1024];
+	char auth_password[1024];
 } Global;
 
 /** Global options regarding the application, the only global variable allowed. */

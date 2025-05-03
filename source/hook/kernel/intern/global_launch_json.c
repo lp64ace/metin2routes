@@ -49,29 +49,26 @@ HOOK_STATIC void hook_globals_launch_init(const char *name, const char *json_dat
 		return;
 	}
 
-	cJSON *metin2 = cJSON_GetObjectItemCaseSensitive(json, "metin2");
-	if (!cJSON_IsObject(metin2)) {
+	cJSON *prop1;
+	if (!cJSON_IsObject(prop1 = cJSON_GetObjectItemCaseSensitive(json, "metin2"))) {
 		fprintf(stderr, "[Kernel] Expected 'metin2' object within %s.\n", name);
 		return;
 	}
 
-	char *m2folder = NULL;
-	char *m2client = NULL;
-
-	cJSON *prop;
-	if (!cJSON_IsString(prop = cJSON_GetObjectItemCaseSensitive(metin2, "directory"))) {
+	cJSON *prop2;
+	if (!cJSON_IsString(prop2 = cJSON_GetObjectItemCaseSensitive(prop1, "directory"))) {
 		fprintf(stderr, "[Kernel] Warning, expected 'directory' field for object metin2.\n");
 		// return;
 	}
 	else {
-		LIB_strcpy(G.m2_folder, ARRAY_SIZE(G.m2_folder), prop->valuestring);
+		LIB_strcpy(G.m2_folder, ARRAY_SIZE(G.m2_folder), prop2->valuestring);
 	}
-	if (!cJSON_IsString(prop = cJSON_GetObjectItemCaseSensitive(metin2, "metin2client.exe"))) {
+	if (!cJSON_IsString(prop2 = cJSON_GetObjectItemCaseSensitive(prop1, "metin2client.exe"))) {
 		fprintf(stderr, "[Kernel] Warning, expected 'metin2client.exe' field for object metin2.\n");
 		// return;
 	}
 	else {
-		LIB_strcpy(G.m2_client, ARRAY_SIZE(G.m2_client), prop->valuestring);
+		LIB_strcpy(G.m2_client, ARRAY_SIZE(G.m2_client), prop2->valuestring);
 	}
 
 	cJSON_Delete(json);

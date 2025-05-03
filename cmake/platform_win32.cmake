@@ -55,11 +55,21 @@ endmacro()
 # -----------------------------------------------------------------------------
 # Pre-Built Libraries
 
+# -----------------------------------------------------------------------------
+# Threads
+
 set(PTHREADS_INCLUDE_DIRS ${LIBDIR}/pthreads/include)
 set(PTHREADS_LIBRARIES ${LIBDIR}/pthreads/lib/pthreadVC3.lib)
 
 # Used in many places so include globally!
 include_directories(SYSTEM "${PTHREADS_INCLUDE_DIRS}")
+
+# -----------------------------------------------------------------------------
+# Detours
+
+add_definitions(-DWIN32_LEAN_AND_MEAN)
+add_definitions(-D_WIN32_WINNT=0x501)
+add_definitions(-DDETOUR_DEBUG=0)
 
 set(DETOURS_INCLUDE_DIRS ${LIBDIR}/detours/include)
 set(DETOURS_LIBRARIES ${LIBDIR}/detours/lib/detours.lib)

@@ -23,6 +23,11 @@ set(INC_SYS
 
 set(SRC
 	main.c
+	
+	intern/CPythonApplication.h
+	intern/CPythonApplication.cc
+	intern/CPythonNetworkStream.h
+	intern/CPythonNetworkStream.c
 )
 
 # -----------------------------------------------------------------------------
@@ -42,3 +47,4 @@ set(LIB
 # Declare Library
 
 hook_add_dll(client "${SRC}" "${INC}" "${INC_SYS}" "${LIB}")
+add_library(hook::source::client ALIAS client)

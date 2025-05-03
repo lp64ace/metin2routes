@@ -28,6 +28,7 @@ set(LIB
 	hook::source::launch
 
 	# External Library Dependencies
+	hook::source::client
 	
 )
 
