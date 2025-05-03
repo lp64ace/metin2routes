@@ -24,8 +24,10 @@ set(INC_SYS
 set(SRC
 	main.c
 	
+	intern/CRaventor.h
+	intern/CRaventor.c
 	intern/CPythonApplication.h
-	intern/CPythonApplication.cc
+	intern/CPythonApplication.c
 	intern/CPythonNetworkStream.h
 	intern/CPythonNetworkStream.c
 )

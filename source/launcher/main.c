@@ -28,7 +28,7 @@ void launch(const char *dll) {
 #ifndef NDEBUG
 		fprintf(stdout, "Process '%s' has been launched in suspended mode, pid %d!\n", G.m2_client, process.dwProcessId);
 		fprintf(stdout, "Press any key to resume the application...\n");
-		// (void)getchar();
+		(void)getchar();
 #endif
 
 		LPVOID alloc = VirtualAllocEx(process.hProcess, NULL, LIB_strlen(dll) + 1, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
