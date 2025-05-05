@@ -22,7 +22,7 @@
 /** \name Memory Macros
  * \{ */
 
-#define MEM_PAD(size) unsigned char pad ## __COUNTER__[size]
+#define MEM_PAD(size) unsigned char pad##__COUNTER__[size]
 
 /** \} */
 

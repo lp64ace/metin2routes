@@ -1,3 +1,5 @@
+#include "MEM_guardedalloc.h"
+
 #include "LIB_assert.h"
 #include "LIB_memory.h"
 #include "LIB_utildefines.h"
@@ -5,7 +7,26 @@
 #include <windows.h>
 #include <detours.h>
 
+#include "CAccountConnector.h"
+#include "CActorInstance.h"
+#include "CNetworkActorManager.h"
 #include "CPythonApplication.h"
+#include "CPythonNetworkStream.h"
+
+CPythonApplication *nkApplication = NULL;
+
+/* -------------------------------------------------------------------- */
+/** \name Offset Resolve
+ * \{ */
+
+CAccountConnector *CPythonApplication_mkAccountConnector(CPythonApplication *me) {
+	return POINTER_OFFSET(me, 0x28958);
+}
+CPythonNetworkStream *CPythonApplication_mpyNetworkStream(CPythonApplication *me) {
+	return POINTER_OFFSET(me, 0x8f0);
+}
+
+/** \} */
 
 /* -------------------------------------------------------------------- */
 /** \name Original Functions
@@ -22,14 +43,44 @@ fnCPythonApplication_Process CPythonApplication_Process = NULL;
 /** \name Overriden Functions
  * \{ */
 
-CPythonApplication *__fastcall mCPythonApplication_Constructor(CPythonApplication *me) {
-	if ((me = CPythonApplication_Constructor(me))) {
-		LOG("CALL << THIS = %p", me);
+CPythonApplication *__fastcall mCPythonApplication_Constructor(CPythonApplication *me, void *EDX) {
+	if ((me = CPythonApplication_Constructor(me, EDX))) {
+		nkApplication = me;
 	}
 	return me;
 }
 
 void __fastcall mCPythonApplication_UpdateGame(CPythonApplication *me, void *EDX) {
+	do {
+		CPythonNetworkStream *m_pyNetworkStream = CPythonApplication_mpyNetworkStream(me);
+		if (!m_pyNetworkStream) {
+			break;
+		}
+
+		CNetworkActorManager *m_rokNetActorMgr = *CPythonNetworkStream_mNetActorMgr(m_pyNetworkStream);
+		if (!m_rokNetActorMgr) {
+			break;
+		}
+
+		if (!*CNetworkActorManager_mdwMainVID(m_rokNetActorMgr)) {
+			break;
+		}
+
+		SNetworkActorData *m_Target = CNetworkActorManager_NetActorClose(m_rokNetActorMgr, EDX, ACTOR_ENEMY);
+		if (!m_Target) {
+			break;
+		}
+
+		double dblMeX = *CNetworkActorManager_mlMainPosX(m_rokNetActorMgr);
+		double dblMeY = *CNetworkActorManager_mlMainPosY(m_rokNetActorMgr);
+		double dblCurX = *SNetworkActorData_mlCurX(m_Target);
+		double dblCurY = *SNetworkActorData_mlCurY(m_Target);
+		double dblCurDist = (dblCurX - dblMeX) * (dblCurX - dblMeX) + (dblCurY - dblMeY) * (dblCurY - dblMeY);
+
+		LOG("ME AT (%ld, %ld) TARET %8s AT (%ld, %ld) DIST %lf", *CNetworkActorManager_mlMainPosX(m_rokNetActorMgr), *CNetworkActorManager_mlMainPosY(m_rokNetActorMgr), SNetworkActorData_mStName(m_Target), *SNetworkActorData_mlCurX(m_Target), *SNetworkActorData_mlCurY(m_Target), sqrt(dblCurDist));
+		MEM_freeN(m_Target);
+	} while (false);
+
 	CPythonApplication_UpdateGame(me, EDX);
 }
 void __fastcall mCPythonApplication_RenderGame(CPythonApplication *me, void *EDX) {

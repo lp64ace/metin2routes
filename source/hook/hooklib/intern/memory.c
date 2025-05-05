@@ -1,5 +1,6 @@
 #include "MEM_guardedalloc.h"
 
+#include "LIB_assert.h"
 #include "LIB_memory.h"
 #include "LIB_string.h"
 
@@ -28,6 +29,8 @@ uintptr_t LIB_pattern_offset_ex(const void *base, size_t size, const unsigned ch
 				break;
 			}
 			if (++index == length) {
+				const size_t remaining = (const char *)POINTER_OFFSET(base, size) - (const char *)itr;
+				HOOK_assert(LIB_pattern_offset_ex(POINTER_OFFSET(itr, 1), remaining, bytes, mask, length, pre, post) == NULL);
 				return (uintptr_t)itr;
 			}
 		}

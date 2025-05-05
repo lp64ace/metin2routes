@@ -2,5 +2,15 @@
     "metin2": {
 	"directory": "D:\\Git\\Raventor_V2",
 	"metin2client.exe": "metin2client.exe"
+    },
+    "Raventor_V2": {
+	"server": {
+	    "host": "141.94.194.241",
+	    "port": 12401
+	},
+	"auth": {
+	    "host": "141.94.194.241",
+	    "port": 11150
+	}
     }
 }

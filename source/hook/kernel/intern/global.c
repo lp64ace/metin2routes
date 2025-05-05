@@ -18,7 +18,20 @@ Global G;
 
 void KER_globals_init() {
 	KER_globals_launch_opt_init();
+	KER_globals_main_replace(KER_main_init());
 }
 
 void KER_globals_exit() {
+	KER_globals_main_replace(NULL);
+}
+
+void KER_globals_main_replace(Main *main) {
+	HOOK_assert((G.main == NULL || G.main->is_global) && (main == NULL || !main->is_global));
+	if (G.main) {
+		KER_main_free(G.main);
+	}
+	G.main = main;
+	if (main) {
+		main->is_global = true;
+	}
 }

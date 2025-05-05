@@ -7,7 +7,14 @@ extern "C" {
 
 typedef struct Main {
 	struct Main *prev, *next;
+
+	bool is_global;
+
+	struct CPythonNetworkStream *rkNetStream;
 } Main;
+
+Main *KER_main_init();
+void KER_main_free(Main *main);
 
 #ifdef __cplusplus
 }
